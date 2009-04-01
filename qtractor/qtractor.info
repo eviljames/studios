@@ -1,0 +1,7 @@
+PRGNAM="qtractor"
+VERSION="0.4.0"
+HOMEPAGE="http://qtractor.sourceforge.net"
+DOWNLOAD="http://downloads.sourceforge.net/qtractor/qtractor-0.4.0.tar.gz"
+MD5SUM="603f37c727b68342df9e5f167bdccd6c"
+MAINTAINER="firebird619"
+EMAIL="firebird609@gmail.com"
