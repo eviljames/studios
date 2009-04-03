@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.  Line
+# up the first '|' above the ':' following the base package name, and the '|' on
+# the right side marks the last column you can put a character in.  You must make
+# exactly 11 lines for the formatting to be correct.  It's also customary to
+# leave one space after the ':'.
+ 
+        |----handy-ruler------------------------------------------------------|
+hydrogen: Hydrogen (Advanced Drum Machine)
+hydrogen:
+hydrogen: Hydrogen is an advanced drum machine for GNU/Linux. It's main goal
+hydrogen: is to bring professional yet simple and intuitive pattern-based
+hydrogen: drum programming.
+hydrogen:  
+hydrogen: http://www.hydrogen-music.org
+hydrogen: 
+hydrogen:
+hydrogen: 
+hydrogen:
