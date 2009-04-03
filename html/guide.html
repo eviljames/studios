@@ -1,0 +1,922 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html >
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<base target="_top">
+<title>Build Order and Dependency Guide</title>
+<style type="text/css">
+/* default css */
+table {
+font-size: 1em;
+line-height: inherit;
+border-collapse: collapse;
+}
+tr {
+text-align: left;
+}
+div, address, ol, ul, li, option, select {
+margin-top: 0px;
+margin-bottom: 0px;
+}
+p {
+margin: 0px;
+}
+pre {
+font-family: Courier New;
+white-space: pre-wrap;
+margin:0;
+}
+body {
+margin: 6px;
+padding: 0px;
+font-family: Verdana, sans-serif;
+font-size: 10pt;
+background-color: #ffffff;
+}
+img {
+-moz-force-broken-image-icon: 1;
+}
+@media screen {
+html.pageview {
+background-color: #f3f3f3 !important;
+}
+body {
+min-height: 1100px;
+counter-reset: __goog_page__;
+}
+* html body {
+height: 1100px;
+}
+.pageview body {
+border-top: 1px solid #ccc;
+border-left: 1px solid #ccc;
+border-right: 2px solid #bbb;
+border-bottom: 2px solid #bbb;
+width: 648px !important;
+margin: 15px auto 25px;
+padding: 40px 50px;
+}
+/* IE6 */
+* html {
+overflow-y: scroll;
+}
+* html.pageview body {
+overflow-x: auto;
+}
+/* Prevent repaint errors when scrolling in Safari. This "Star-7" css hack
+targets Safari 3.1, but not WebKit nightlies and presumably Safari 4.
+That's OK because this bug is fixed in WebKit nightlies/Safari 4 :-). */
+html*#wys_frame::before {
+content: '\A0';
+position: fixed;
+overflow: hidden;
+width: 0;
+height: 0;
+top: 0;
+left: 0;
+}
+.writely-callout-data {
+display: none;
+*display: inline-block;
+*width: 0;
+*height: 0;
+*overflow: hidden;
+}
+.writely-footnote-marker {
+background-image: url('images/footnote_doc_icon.gif');
+background-color: transparent;
+background-repeat: no-repeat;
+width: 7px;
+overflow: hidden;
+height: 16px;
+vertical-align: top;
+-moz-user-select: none;
+}
+.editor .writely-footnote-marker {
+cursor: move;
+}
+.writely-footnote-marker-highlight {
+background-position: -15px 0;
+-moz-user-select: text;
+}
+.writely-footnote-hide-selection ::-moz-selection, .writely-footnote-hide-selection::-moz-selection {
+background: transparent;
+}
+.writely-footnote-hide-selection ::selection, .writely-footnote-hide-selection::selection {
+background: transparent;
+}
+.writely-footnote-hide-selection {
+cursor: move;
+}
+.editor .writely-comment-yellow {
+background-color: #FF9;
+background-position: -240px 0;
+}
+.editor .writely-comment-yellow-hover {
+background-color: #FF0;
+background-position: -224px 0;
+}
+.editor .writely-comment-blue {
+background-color: #C0D3FF;
+background-position: -16px 0;
+}
+.editor .writely-comment-blue-hover {
+background-color: #6292FE;
+background-position: 0 0;
+}
+.editor .writely-comment-orange {
+background-color: #FFDEAD;
+background-position: -80px 0;
+}
+.editor .writely-comment-orange-hover {
+background-color: #F90;
+background-position: -64px 0;
+}
+.editor .writely-comment-green {
+background-color: #99FBB3;
+background-position: -48px 0;
+}
+.editor .writely-comment-green-hover {
+background-color: #00F442;
+background-position: -32px 0;
+}
+.editor .writely-comment-cyan {
+background-color: #CFF;
+background-position: -208px 0;
+}
+.editor .writely-comment-cyan-hover {
+background-color: #0FF;
+background-position: -192px 0;
+}
+.editor .writely-comment-purple {
+background-color: #EBCCFF;
+background-position: -144px 0;
+}
+.editor .writely-comment-purple-hover {
+background-color: #90F;
+background-position: -128px 0;
+}
+.editor .writely-comment-magenta {
+background-color: #FCF;
+background-position: -112px 0;
+}
+.editor .writely-comment-magenta-hover {
+background-color: #F0F;
+background-position: -96px 0;
+}
+.editor .writely-comment-red {
+background-color: #FFCACA;
+background-position: -176px 0;
+}
+.editor .writely-comment-red-hover {
+background-color: #FF7A7A;
+background-position: -160px 0;
+}
+.editor .writely-comment-marker {
+background-image: url('images/markericons_horiz.gif');
+background-color: transparent;
+padding-right: 11px;
+background-repeat: no-repeat;
+width: 16px;
+height: 16px;
+-moz-user-select: none;
+}
+.editor .writely-comment-hidden {
+padding: 0;
+background: none;
+}
+.editor .writely-comment-marker-hidden {
+background: none;
+padding: 0;
+width: 0;
+}
+.editor .writely-comment-none {
+opacity: .2;
+filter:progid:DXImageTransform.Microsoft.Alpha(opacity=20);
+-moz-opacity: .2;
+}
+.editor .writely-comment-none-hover {
+opacity: .2;
+filter:progid:DXImageTransform.Microsoft.Alpha(opacity=20);
+-moz-opacity: .2;
+}
+.br_fix br:not(:-moz-last-node):not(:-moz-first-node) {
+position:relative;
+left: -1ex
+}
+.br_fix br+br {
+position: static !important
+}
+}
+h6 { font-size: 8pt }
+h5 { font-size: 8pt }
+h4 { font-size: 10pt }
+h3 { font-size: 12pt }
+h2 { font-size: 14pt }
+h1 { font-size: 18pt }
+blockquote {padding: 10px; border: 1px #DDD dashed }
+a img {border: 0}
+.pb {
+border-width: 0;
+page-break-after: always;
+/* We don't want this to be resizeable, so enforce a width and height
+using !important */
+height: 1px !important;
+width: 100% !important;
+}
+.editor .pb {
+border-top: 1px dashed #C0C0C0;
+border-bottom: 1px dashed #C0C0C0;
+}
+div.google_header, div.google_footer {
+position: relative;
+margin-top: 1em;
+margin-bottom: 1em;
+}
+/* Table of contents */
+.editor div.writely-toc {
+background-color: #f3f3f3;
+border: 1px solid #ccc;
+}
+.writely-toc > ol {
+padding-left: 3em;
+font-weight: bold;
+}
+ol.writely-toc-subheading {
+padding-left: 1em;
+font-weight: normal;
+}
+/* IE6 only */
+* html writely-toc ol {
+list-style-position: inside;
+}
+.writely-toc-none {
+list-style-type: none;
+}
+.writely-toc-decimal {
+list-style-type: decimal;
+}
+.writely-toc-upper-alpha {
+list-style-type: upper-alpha;
+}
+.writely-toc-lower-alpha {
+list-style-type: lower-alpha;
+}
+.writely-toc-upper-roman {
+list-style-type: upper-roman;
+}
+.writely-toc-lower-roman {
+list-style-type: lower-roman;
+}
+.writely-toc-disc {
+list-style-type: disc;
+}
+/* Ordered lists converted to numbered lists can preserve ordered types, and
+vice versa. This is confusing, so disallow it */
+ul[type="i"], ul[type="I"], ul[type="1"], ul[type="a"], ul[type="A"] {
+list-style-type: disc;
+}
+ol[type="disc"], ol[type="circle"], ol[type="square"] {
+list-style-type: decimal;
+}
+/* end default css */
+/* custom css */
+/* end custom css */
+/* ui edited css */
+body {
+font-family: Arial;
+font-size: 12.0pt;
+line-height: normal;
+background-color: #ffffff;
+}
+/* end ui edited css */
+/* editor CSS */
+.editor a:visited {color: #551A8B}
+.editor table.zeroBorder {border: 1px dotted gray}
+.editor table.zeroBorder td {border: 1px dotted gray}
+.editor table.zeroBorder th {border: 1px dotted gray}
+.editor div.google_header, .editor div.google_footer {
+border: 2px #DDDDDD dashed;
+position: static;
+width: 100%;
+min-height: 2em;
+}
+.editor .misspell {background-color: yellow}
+.editor .writely-comment {
+font-size: 9pt;
+line-height: 1.4;
+padding: 1px;
+border: 1px dashed #C0C0C0
+}
+/* end editor CSS */
+</style>
+<style>
+body {
+margin: 0px;
+}
+#doc-contents {
+margin: 6px;
+}
+#google-view-footer {
+clear: both;
+border-top: thin solid;
+padding-top: 0.3em;
+padding-bottom: 0.3em;
+}
+a.google-small-link:link, a.google-small-link:visited {
+color:#112ABB;
+font-family:Arial,Sans-serif;
+font-size:11px !important;
+}
+body, p, div, td {
+direction: inherit;
+}
+@media print {
+#google-view-footer {
+display: none;
+}
+}
+</style>
+<script>
+function viewOnLoad() {
+if (document.location.href.indexOf('spi=1') != -1) {
+if (navigator.userAgent.toLowerCase().indexOf('msie') != -1) {
+window.print();
+} else {
+window.setTimeout(window.print, 10);
+}
+}
+if (document.location.href.indexOf('hgd=1') != -1) {
+var footer = document.getElementById("google-view-footer");
+if (footer) {
+footer.style.display = 'none';
+}
+}
+}
+</script>
+</head>
+<body>
+<div id="doc-contents">
+<p class="western" style="font-family: Arial;" align="center">
+<font size="4"><u><b>StudioS for Slackware 12.2 Build Guide</b></u></font>
+</p>
+<p class="western" style="font-family: Arial;" align="center">
+<br>
+</p>
+<p class="western" style="font-family: Arial;" align="center">
+<font size="4"><u><b>Build Environment:</b></u></font>
+</p>
+<p class="western" style="font-family: Arial;" align="center">
+<font size="4">The following guide has been built using Slackware 12.2+patches with the following series installed: A, AP, D, L, N, T, X, and XAP.</font>
+</p>
+<p class="western" style="font-family: Arial;" align="center">
+<br>
+</p>
+<p class="western" style="font-family: Arial;" align="center">
+<font size="4"><u><b>A Note of Thanks</b></u><b>:</b></font>
+</p>
+<p class="western" style="font-family: Arial;" align="center">
+<font size="4">We would like to thank those involved with http://www.slackbuilds.org. If it was not for their hard work, this project would not be possible.<br>
+</font>
+</p>
+<p class="western" style="font-family: Arial;" align="center">
+</p><hr size="2"><font size="3"><u><b><br>Audacity</b></u> </font><a title="http://audacity.sourceforge.net" href="http://audacity.sourceforge.net" id="ih4d">http://audacity.sourceforge.net</a> <p class="western" style="font-family: Arial;">
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3">1. Install wxPython 2.8.9.2 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/libraries/wxPython/" href="http://slackbuilds.org/repository/12.2/libraries/wxPython/" id="c3j0">http://slackbuilds.org/repository/12.2/libraries/wxPython/</a> <font size="3">(Dep of Audacity)</font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3">2. Install libsndfile 1.0.18 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/libraries/libsndfile/" href="http://slackbuilds.org/repository/12.2/libraries/libsndfile/" id="nf8e">http://slackbuilds.org/repository/12.2/libraries/libsndfile/</a> <font size="3"> (Dep of Audacity)</font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3">3. Install audacity 1.3.7 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/audio/audacity/" href="http://slackbuilds.org/repository/12.2/audio/audacity/" id="hd:b">http://slackbuilds.org/repository/12.2/audio/audacity/</a> </p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3"><u><b>LilyPond</b></u> </font><font size="3"><a title="http://lilypond.org" href="http://lilypond.org" id="o2p_">http://lilypond.org</a> </font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3">1. Install fontforge 20081215 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/graphics/fontforge/" href="http://slackbuilds.org/repository/12.2/graphics/fontforge/" id="rb7w">http://slackbuilds.org/repository/12.2/graphics/fontforge/</a> <font size="3">(Dep of Lilypond and mftrace)</font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3">2. Install potrace 1.8 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/graphics/potrace/" href="http://slackbuilds.org/repository/12.2/graphics/potrace/" id="v68g">http://slackbuilds.org/repository/12.2/graphics/potrace/</a> <font size="3">(Dep of mftrace)</font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3">3. Install t1utils 1.33 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/system/t1utils/" href="http://slackbuilds.org/repository/12.2/system/t1utils/" id="x43m">http://slackbuilds.org/repository/12.2/system/t1utils/</a> <font size="3"> (Dep of mftrace)</font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3">4. Install mftrace 1.2.14 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/graphics/mftrace/" href="http://slackbuilds.org/repository/12.2/graphics/mftrace/" id="kvth">http://slackbuilds.org/repository/12.2/graphics/mftrace/</a> <font size="3"> (Dep of Lilypond)</font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3">5. Install lilypond 2.10.33 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/graphics/lilypond/" href="http://slackbuilds.org/repository/12.2/graphics/lilypond/" id="rfi_">http://slackbuilds.org/repository/12.2/graphics/lilypond/</a> <font size="3"> (T/ series must be installed)</font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3"><u><b>Rosegarden</b></u> </font><font size="3"><a title="http://www.rosegardenmusic.com" href="http://www.rosegardenmusic.com" id="obgl">http://www.rosegardenmusic.com</a> </font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="text-decoration: none; font-family: Arial;">
+<font size="3">1. Install fftw 3.2.1 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/libraries/fftw/" href="http://slackbuilds.org/repository/12.2/libraries/fftw/" id="unmp">http://slackbuilds.org/repository/12.2/libraries/fftw/</a> <font size="3"> (Dep of Rosegarden)</font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3">2. Install libsndfile 1.0.18 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/libraries/libsndfile/" href="http://slackbuilds.org/repository/12.2/libraries/libsndfile/" id="wqu6">http://slackbuilds.org/repository/12.2/libraries/libsndfile/</a> <font size="3"> (Dep of Rosegarden)</font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3">3. Install jack-audio-connection-kit 0.116.2 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/audio/jack-audio-connection-kit/" href="http://slackbuilds.org/repository/12.2/audio/jack-audio-connection-kit/" id="im17">http://slackbuilds.org/repository/12.2/audio/jack-audio-connection-kit/</a> <font size="3"> (Optionally needs libsndfle) (Dep of Rosegarden)</font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3">4. Install liblo 0.25 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/libraries/liblo/" href="http://slackbuilds.org/repository/12.2/libraries/liblo/" id="l.k.">http://slackbuilds.org/repository/12.2/libraries/liblo/</a> <font size="3"> (Dep of Rosegarden)</font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3">5. Install raptor 1.4.18 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/libraries/raptor/" href="http://slackbuilds.org/repository/12.2/libraries/raptor/" id="nsl1">http://slackbuilds.org/repository/12.2/libraries/raptor/</a> <font size="3"> (Dep of liblrdf) (Dep of Rosegarden)</font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3">6. Install ladspa_sdk 1.13 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/audio/ladspa_sdk/" href="http://slackbuilds.org/repository/12.2/audio/ladspa_sdk/" id="bgv4">http://slackbuilds.org/repository/12.2/audio/ladspa_sdk/</a> <font size="3"> (Dep of liblrdf) (Dep of Rosegarden)</font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3">7. Install liblrdf 0.4.0 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/libraries/liblrdf/" href="http://slackbuilds.org/repository/12.2/libraries/liblrdf/" id="oai1">http://slackbuilds.org/repository/12.2/libraries/liblrdf/</a> <font size="3"> (Dep of Rosegarden)</font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3">8. Install xml-twig 3.32 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/development/xml-twig/" href="http://slackbuilds.org/repository/12.2/development/xml-twig/" id="h9dv">http://slackbuilds.org/repository/12.2/development/xml-twig/</a> <font size="3"> (Dep of Rosegarden)</font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3">9. Install lilypond 2.10.33 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/graphics/lilypond/" href="http://slackbuilds.org/repository/12.2/graphics/lilypond/" id="lez-">http://slackbuilds.org/repository/12.2/graphics/lilypond/</a> <font size="3"> (T/ series must be installed) (Not required, but good idea) (Dep of Rosegarden)</font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3">10. Install rosegarden 1.7.3 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/audio/rosegarden/" href="http://slackbuilds.org/repository/12.2/audio/rosegarden/" id="z07p">http://slackbuilds.org/repository/12.2/audio/rosegarden/</a> </p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3"><u><b>Ardour</b></u> </font><font size="3"><a title="http://ardour.org" href="http://ardour.org" id="txop">http://ardour.org</a> </font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="text-decoration: none; font-family: Arial;">
+<font size="3">1. Install liblo 0.25 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/libraries/liblo/" href="http://slackbuilds.org/repository/12.2/libraries/liblo/" id="ijdz">http://slackbuilds.org/repository/12.2/libraries/liblo/</a> <font size="3"> (Dep of Ardour)</font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3">2. Install raptor 1.4.18 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/libraries/raptor/" href="http://slackbuilds.org/repository/12.2/libraries/raptor/" id="ugpp">http://slackbuilds.org/repository/12.2/libraries/raptor/</a> <font size="3"> (Dep of liblrdf) (Dep of Ardour)</font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3">3. Install ladspa_sdk 1.13 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/audio/ladspa_sdk/" href="http://slackbuilds.org/repository/12.2/audio/ladspa_sdk/" id="vu6t">http://slackbuilds.org/repository/12.2/audio/ladspa_sdk/</a> <font size="3"> (Dep of liblrdf) (Dep of Ardour)</font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3">4. Install boost 1.38.0 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/development/boost/" href="http://slackbuilds.org/repository/12.2/development/boost/" id="qjo2">http://slackbuilds.org/repository/12.2/development/boost/</a> <font size="3"> (Dep of Ardour)</font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3">5. Install scons 1.2.0 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/development/scons/" href="http://slackbuilds.org/repository/12.2/development/scons/" id="fob2">http://slackbuilds.org/repository/12.2/development/scons/</a> <font size="3"> (Dep of Ardour)</font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3">6. Install fftw 3.2.1 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/libraries/fftw/" href="http://slackbuilds.org/repository/12.2/libraries/fftw/" id="xkss">http://slackbuilds.org/repository/12.2/libraries/fftw/</a> <font size="3"> (Dep of Ardour)</font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3">7. Install libsamplerate 0.1.6 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/libraries/libsamplerate/" href="http://slackbuilds.org/repository/12.2/libraries/libsamplerate/" id="tjhm">http://slackbuilds.org/repository/12.2/libraries/libsamplerate/</a> <font size="3"> (Dep of aubio) (Dep of Ardour)</font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3">8. Install jack-audio-connection-kit 0.116.2 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/audio/jack-audio-connection-kit/" href="http://slackbuilds.org/repository/12.2/audio/jack-audio-connection-kit/" id="eta7">http://slackbuilds.org/repository/12.2/audio/jack-audio-connection-kit/</a> <font size="3"> (Dep of Ardour)</font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3">9. Install gail 1.22.3 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/libraries/gail/" href="http://slackbuilds.org/repository/12.2/libraries/gail/" id="j.zg">http://slackbuilds.org/repository/12.2/libraries/gail/</a> <font size="3"> (Dep of libgnomecanvas) (Dep of Ardour)</font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3">10. Install libgnomecanvas 2.20.1.1 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/libraries/libgnomecanvas/" href="http://slackbuilds.org/repository/12.2/libraries/libgnomecanvas/" id="dg4f">http://slackbuilds.org/repository/12.2/libraries/libgnomecanvas/</a> <font size="3"> (Dep of Ardour)</font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3">11. Install libsndfile 1.0.18 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/libraries/libsndfile/" href="http://slackbuilds.org/repository/12.2/libraries/libsndfile/" id="e29n">http://slackbuilds.org/repository/12.2/libraries/libsndfile/</a> <font size="3"> (Dep of aubio) (Dep of Ardour)</font>
+</p>
+<p class="western" style="font-family: Arial;">
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3">12. Install aubio 0.3.2 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/libraries/aubio/" href="http://slackbuilds.org/repository/12.2/libraries/aubio/" id="sl7d">http://slackbuilds.org/repository/12.2/libraries/aubio/</a> <font size="3"> (Dep of Ardour)</font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3">13. Install ardour 2.7.1 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/audio/ardour/" href="http://slackbuilds.org/repository/12.2/audio/ardour/" id="eqcz">http://slackbuilds.org/repository/12.2/audio/ardour/</a> </p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3"><u><b>Timidity++</b></u> </font><font size="3"><a title="http://timidity.sourceforge.net" href="http://timidity.sourceforge.net" id="dp16">http://timidity.sourceforge.net</a> </font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="text-decoration: none; font-family: Arial;">
+<font size="3">1. Install freepats 20060219 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/audio/freepats/" href="http://slackbuilds.org/repository/12.2/audio/freepats/" id="a335">http://slackbuilds.org/repository/12.2/audio/freepats/</a> <font size="3"> (Dep of Timidity)<br>
+</font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3">2. Install TiMidity++ 2.13.2 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/multimedia/TiMidity++/" href="http://slackbuilds.org/repository/12.2/multimedia/TiMidity++/" id="q2z4">http://slackbuilds.org/repository/12.2/multimedia/TiMidity++/</a> </p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3"><u><b>LMMS</b></u> </font><font size="3"><a title="http://lmms.sourceforge.net" href="http://lmms.sourceforge.net" id="slno">http://lmms.sourceforge.net</a> </font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="text-decoration: none; font-family: Arial;">
+<font size="3">1. Install qt4 0.4.2 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/libraries/qt4/" href="http://slackbuilds.org/repository/12.2/libraries/qt4/" id="aref">http://slackbuilds.org/repository/12.2/libraries/qt4/</a> <font size="3"> (Dep of lmms)</font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3">2. Install libsndfile 1.0.18 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/libraries/libsndfile/" href="http://slackbuilds.org/repository/12.2/libraries/libsndfile/" id="f68h">http://slackbuilds.org/repository/12.2/libraries/libsndfile/</a> <font size="3"> (Dep of lmms)</font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3">3. Install libsamplerate 0.1.6 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/libraries/libsamplerate/" href="http://slackbuilds.org/repository/12.2/libraries/libsamplerate/" id="btbf">http://slackbuilds.org/repository/12.2/libraries/libsamplerate/</a> <font size="3"> (Dep of lmms)</font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3">4. Install ladspa_sdk 1.13 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/audio/ladspa_sdk/" href="http://slackbuilds.org/repository/12.2/audio/ladspa_sdk/" id="o65z">http://slackbuilds.org/repository/12.2/audio/ladspa_sdk/</a> <font size="3"> (Dep of fluidsynth) (Dep of lmms)</font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3">5. Install jack-audio-connection-kit 0.116.2 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/audio/jack-audio-connection-kit/" href="http://slackbuilds.org/repository/12.2/audio/jack-audio-connection-kit/" id="ixfd">http://slackbuilds.org/repository/12.2/audio/jack-audio-connection-kit/</a> <font size="3"> (Dep of fluidsynth) (Dep of lmms)</font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3">6. Install fftw 3.2.1 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/libraries/fftw/" href="http://slackbuilds.org/repository/12.2/libraries/fftw/" id="mrpp">http://slackbuilds.org/repository/12.2/libraries/fftw/</a> <font size="3"> (Dep of lmms)</font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3">7. Install lmms 0.4.2 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/audio/lmms/" href="http://slackbuilds.org/repository/12.2/audio/lmms/" id="w06d">http://slackbuilds.org/repository/12.2/audio/lmms/</a> </p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3"><u><b>Denemo</b></u> </font><font size="3"><a title="http://www.denemo.org" href="http://www.denemo.org" id="gxgr">http://www.denemo.org</a> </font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3">1. Install portaudio 20071207 Use slackbuild from alienBOB for 12.0 to build (<a title="http://www.slackware.com/~alien/slackbuilds/portaudio/" href="http://www.slackware.com/%7Ealien/slackbuilds/portaudio/" id="b9zt">http://www.slackware.com/~alien/slackbuilds/portaudio/</a> )</font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3">2. Install fontforge 20081215 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/graphics/fontforge/" href="http://slackbuilds.org/repository/12.2/graphics/fontforge/" id="j6.w">http://slackbuilds.org/repository/12.2/graphics/fontforge/</a> <font size="3">(Dep of Lilypond and mftrace)</font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3">3. Install potrace 1.8 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/graphics/potrace/" href="http://slackbuilds.org/repository/12.2/graphics/potrace/" id="r91p">http://slackbuilds.org/repository/12.2/graphics/potrace/</a> <font size="3">(Dep of mftrace)</font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3">4. Install t1utils 1.33 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/system/t1utils/" href="http://slackbuilds.org/repository/12.2/system/t1utils/" id="a2yn">http://slackbuilds.org/repository/12.2/system/t1utils/</a> <font size="3"> (Dep of mftrace)</font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3">5. Install mftrace 1.2.14 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/graphics/mftrace/" href="http://slackbuilds.org/repository/12.2/graphics/mftrace/" id="e_8s">http://slackbuilds.org/repository/12.2/graphics/mftrace/</a> <font size="3"> (Dep of Lilypond)</font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3">6. Install lilypond 2.10.33 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/graphics/lilypond/" href="http://slackbuilds.org/repository/12.2/graphics/lilypond/" id="t4yu">http://slackbuilds.org/repository/12.2/graphics/lilypond/</a> <font size="3"> (T/ series must be installed) (Dep of Denemo)</font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3">7. Install aubio 0.3.2 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/libraries/aubio/" href="http://slackbuilds.org/repository/12.2/libraries/aubio/" id="icr_">http://slackbuilds.org/repository/12.2/libraries/aubio/</a> <font size="3"> (Dep of Denemo)</font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3">8. Install Denemo 0.8.2 from source (<a title="http://www.denemo.org" href="http://www.denemo.org" id="s8si">http://www.denemo.org</a> ) (Slackbuild forthcoming)<br>
+</font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3"><u><b>Solfege</b></u> </font><font size="3"><a title="http://www.solfege.org" href="http://www.solfege.org" id="pa:6">http://www.solfege.org</a> </font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="text-decoration: none; font-family: Arial;">
+<font size="3">1. Install freepats 20060219 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/audio/freepats/" href="http://slackbuilds.org/repository/12.2/audio/freepats/" id="ygn_">http://slackbuilds.org/repository/12.2/audio/freepats/</a> </p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3">2. Install TiMidity++ 2.13.2 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/multimedia/TiMidity++/" href="http://slackbuilds.org/repository/12.2/multimedia/TiMidity++/" id="e9j2">http://slackbuilds.org/repository/12.2/multimedia/TiMidity++/</a> <font size="3"> (Dep of Solfege)</font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3">3. Install Solfege 3.12.0 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/academic/solfege/" href="http://slackbuilds.org/repository/12.2/academic/solfege/" id="p6:r">http://slackbuilds.org/repository/12.2/academic/solfege/</a> </p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3"><u><b>Qtractor</b></u> <a title="http://qtractor.sourceforge.net" href="http://qtractor.sourceforge.net" id="o5ez">http://qtractor.sourceforge.net</a> </font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="text-decoration: none; font-family: Arial;">
+<font size="3">1. Install qt4 4.4.3 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/libraries/qt4/" href="http://slackbuilds.org/repository/12.2/libraries/qt4/" id="a2w.">http://slackbuilds.org/repository/12.2/libraries/qt4/</a> <font size="3"> (Dep of Qtractor)</font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3">2. Install jack-audio-connection-kit 0.116.2 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/audio/jack-audio-connection-kit/" href="http://slackbuilds.org/repository/12.2/audio/jack-audio-connection-kit/" id="q5jo">http://slackbuilds.org/repository/12.2/audio/jack-audio-connection-kit/</a> <font size="3"> (Dep of Qtractor)</font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3">3. Install libsndfile 1.0.18 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/libraries/libsndfile/" href="http://slackbuilds.org/repository/12.2/libraries/libsndfile/" id="hru.">http://slackbuilds.org/repository/12.2/libraries/libsndfile/</a> <font size="3"> (Dep of Qtractor)</font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3">4. Install ladspa_sdk 1.13 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/audio/ladspa_sdk/" href="http://slackbuilds.org/repository/12.2/audio/ladspa_sdk/" id="zlc0">http://slackbuilds.org/repository/12.2/audio/ladspa_sdk/</a> <font size="3"> (Dep of Qtractor)</font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3">5. Install liblo 0.25 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/libraries/liblo/" href="http://slackbuilds.org/repository/12.2/libraries/liblo/" id="m-:7">http://slackbuilds.org/repository/12.2/libraries/liblo/</a> <font size="3"> (Dep of Qtractor)</font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3">6. Install Qtractor from source 0.4.0 from <a title="http://qtractor.sourceforge.net" href="http://qtractor.sourceforge.net" id="t9x.">http://qtractor.sourceforge.net</a> and build to directory of your choosing. (Slackbuild forthcoming)<br>
+</font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3"><u><b>Hydrogen</b></u> </font><font size="3"><a title="http://www.hydrogen-music.org" href="http://www.hydrogen-music.org" id="oz-7">http://www.hydrogen-music.org</a> </font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="text-decoration: none; font-family: Arial;">
+<font size="3">1. Install qt4 4.4.3 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/libraries/qt4/" href="http://slackbuilds.org/repository/12.2/libraries/qt4/" id="yef_">http://slackbuilds.org/repository/12.2/libraries/qt4/</a> <font size="3"> (Dep of hydrogen)</font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3">2. Install libsndfile 1.0.18 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/libraries/libsndfile/" href="http://slackbuilds.org/repository/12.2/libraries/libsndfile/" id="np4.">http://slackbuilds.org/repository/12.2/libraries/libsndfile/</a> <font size="3"> (Dep of hydrogen) (Optional Dep of jack-audio-connection-kit)</font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3">5. Install jack-audio-connection-kit 0.116.2 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/audio/jack-audio-connection-kit/" href="http://slackbuilds.org/repository/12.2/audio/jack-audio-connection-kit/" id="yo.s">http://slackbuilds.org/repository/12.2/audio/jack-audio-connection-kit/</a> <font size="3"> (Dep of hydrogen)</font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3">6. Install libtar 1.2.11 from source (hard to find) (Slackbuild &amp; source forthcoming)<br>
+</font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3">6. Install Hydrogen from source 0.9.4beta from <a title="http://www.hydrogen-music.org" href="http://www.hydrogen-music.org" id="s:75">http://www.hydrogen-music.org</a> (Slackbuild forthcoming)<br>
+</font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3"><u><b>QJackCtl</b></u> <a title="http://qjackctl.sourceforge.net" href="http://qjackctl.sourceforge.net" id="khzq">http://qjackctl.sourceforge.net</a> </font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="text-decoration: none; font-family: Arial;">
+<font size="3">1. Install qt4 4.4.3 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/libraries/qt4/" href="http://slackbuilds.org/repository/12.2/libraries/qt4/" id="x5ek">http://slackbuilds.org/repository/12.2/libraries/qt4/</a> <font size="3"> (Dep of qjackctl)</font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3">2. Install jack-audio-connection-kit 0.116.2 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/audio/jack-audio-connection-kit/" href="http://slackbuilds.org/repository/12.2/audio/jack-audio-connection-kit/" id="cdaz">http://slackbuilds.org/repository/12.2/audio/jack-audio-connection-kit/</a> <font size="3"> (Dep of qjackctl)</font>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<font size="3">3. Install qjackctl 0.3.4 (from SBo) </font><a title="http://slackbuilds.org/repository/12.2/audio/qjackctl/" href="http://slackbuilds.org/repository/12.2/audio/qjackctl/" id="oxo1">http://slackbuilds.org/repository/12.2/audio/qjackctl/</a></p><p class="western" style="font-family: Arial;"><br></p><p class="western" style="font-family: Arial;"><u><b>DSSI</b></u> <a title="http://dssi.sourceforge.net" href="http://dssi.sourceforge.net" id="icub">http://dssi.sourceforge.net</a>&nbsp;</p><p class="western" style="font-family: Arial;"><br></p><p class="western" style="font-family: Arial;">1. Install ladspa_sdk 1.13 (from SBo) <a title="http://slackbuilds.org/repository/12.2/audio/ladspa_sdk/" href="http://slackbuilds.org/repository/12.2/audio/ladspa_sdk/" id="uc23">http://slackbuilds.org/repository/12.2/audio/ladspa_sdk/</a> &nbsp; (Dep of DSSI)<br><br>2. Install libsndfile 1.0.18 (from SBo) <a title="http://slackbuilds.org/repository/12.2/libraries/libsndfile/" href="http://slackbuilds.org/repository/12.2/libraries/libsndfile/" id="wt:f">http://slackbuilds.org/repository/12.2/libraries/libsndfile/</a> &nbsp; (Dep of DSSI)<br><br>3.&nbsp; Install jack-audio-connection-kit 0.116.2 (from SBo) <a title="http://slackbuilds.org/repository/12.2/audio/jack-audio-connection-kit/" href="http://slackbuilds.org/repository/12.2/audio/jack-audio-connection-kit/" id="qku-">http://slackbuilds.org/repository/12.2/audio/jack-audio-connection-kit/</a> &nbsp; (Dep of DSSI)<br><br>4. Install liblo 0.25 (from SBo) <a title="http://slackbuilds.org/repository/12.2/libraries/liblo/" href="http://slackbuilds.org/repository/12.2/libraries/liblo/" id="w7nx">http://slackbuilds.org/repository/12.2/libraries/liblo/</a> &nbsp; (Dep of DSSI)<br><br>5. Install libsamplerate 0.1.6 (from SBo) <a title="http://slackbuilds.org/repository/12.2/libraries/libsamplerate/" href="http://slackbuilds.org/repository/12.2/libraries/libsamplerate/" id="kq1h">http://slackbuilds.org/repository/12.2/libraries/libsamplerate/</a> &nbsp; (Dep of DSSI)</p><p class="western" style="font-family: Arial;"><br></p><p class="western" style="font-family: Arial;">6. Install DSSI from source from <a title="http://dssi.sourceforge.net" href="http://dssi.sourceforge.net" id="osp2">http://dssi.sourceforge.net</a> (Slackbuild forthcoming)</p><p class="western" style="font-family: Arial;"><br></p><p class="western" style="font-family: Arial;"><u><b>Calf Audio Plugin Pack</b></u>&nbsp;<a title="http://calf.sourceforge.net" href="http://calf.sourceforge.net" id="u8.:">http://calf.sourceforge.net</a>&nbsp;</p><p class="western" style="font-family: Arial;"><br></p>1. Install ladspa_sdk 1.13 (from SBo) <a title="http://slackbuilds.org/repository/12.2/audio/ladspa_sdk/" href="http://slackbuilds.org/repository/12.2/audio/ladspa_sdk/" id="uc23">http://slackbuilds.org/repository/12.2/audio/ladspa_sdk/</a> &nbsp; (Dep of Calf)<br><br><p class="western" style="font-family: Arial;">2. Install libsndfile 1.0.18 (from SBo) <a title="http://slackbuilds.org/repository/12.2/libraries/libsndfile/" href="http://slackbuilds.org/repository/12.2/libraries/libsndfile/" id="wt:f">http://slackbuilds.org/repository/12.2/libraries/libsndfile/</a> &nbsp; (Dep of Calf)<br><br>3.&nbsp; Install jack-audio-connection-kit 0.116.2 (from SBo) <a title="http://slackbuilds.org/repository/12.2/audio/jack-audio-connection-kit/" href="http://slackbuilds.org/repository/12.2/audio/jack-audio-connection-kit/" id="qku-">http://slackbuilds.org/repository/12.2/audio/jack-audio-connection-kit/</a> &nbsp; (Dep of Calf)<br><br>4. Install liblo 0.25 (from SBo) <a title="http://slackbuilds.org/repository/12.2/libraries/liblo/" href="http://slackbuilds.org/repository/12.2/libraries/liblo/" id="w7nx">http://slackbuilds.org/repository/12.2/libraries/liblo/</a> &nbsp; (Dep of Calf)<br><br>5. Install libsamplerate 0.1.6 (from SBo) <a title="http://slackbuilds.org/repository/12.2/libraries/libsamplerate/" href="http://slackbuilds.org/repository/12.2/libraries/libsamplerate/" id="kq1h">http://slackbuilds.org/repository/12.2/libraries/libsamplerate/</a> &nbsp; (Dep of Calf)</p>
+<p class="western" style="font-family: Arial;"><br>
+</p>
+<p class="western" style="font-family: Arial;">6. Install DSSI from source from <a title="http://dssi.sourceforge.net" href="http://dssi.sourceforge.net/" id="osp2">http://dssi.sourceforge.net</a> (Slackbuild forthcoming)</p><p class="western" style="font-family: Arial;"><br></p><p class="western" style="font-family: Arial;">7. Install LV2 3.0 core from source <a title="http://lv2plug.in/spec" href="http://lv2plug.in/spec" id="x048">http://lv2plug.in/</a> (Slackbuild forthcoming)</p><p class="western" style="font-family: Arial;"><br></p><p class="western" style="font-family: Arial;">8. Install Calf 0.0.18.3 from source <a title="http://calf.sourceforge.net" href="http://calf.sourceforge.net" id="mx6o">http://calf.sourceforge.net</a> (Slackbuild forthcoming)<br></p>
+<br><p class="western" style="font-family: Arial;"><a title="http://slackbuilds.org/repository/12.2/audio/qjackctl/" href="http://slackbuilds.org/repository/12.2/audio/qjackctl/" id="oxo1"><br></a></p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<p class="western" style="font-family: Arial;">
+<br>
+</p>
+<br><br>
+<br clear="all"/>
+</div>
+<div id="google-view-footer">
+<div id="maybecanedit" style="float:right">
+<a class="google-small-link"
+           id="editpermissionlink"
+           
+             href="Edit?tab=edit&dr=true&docid=dfx7gckk_5g5f39cfn"
+           
+           title="Edit this page">
+Edit this page (if you have permission)</a>
+<span style="color:#676767;">|</span>
+<input id="report-abuse-button" type="button"
+         value="Report abuse" onclick="reportAbuse();">
+</div>
+<div style="float:left">
+<a title="Learn more about Google Docs"
+            class="google-small-link"
+            href="/">
+Google Docs -- Web word processing, presentations and spreadsheets.</a>
+</div>
+<p> &nbsp;
+</div>
+<script><!--
+    viewOnLoad();
+    
+    
+    var urchinPage = "/View";
+
+    
+    function getXHR() {
+      if (typeof XMLHttpRequest != "undefined") {
+        return new XMLHttpRequest();
+      }
+      try { return new ActiveXObject("Msxml2.XMLHTTP.6.0") } catch(e) {}
+      try { return new ActiveXObject("Msxml2.XMLHTTP.3.0") } catch(e) {}
+      try { return new ActiveXObject("Msxml2.XMLHTTP") } catch(e) {}
+      try { return new ActiveXObject("Microsoft.XMLHTTP") } catch(e) {}
+      return null;
+    }
+
+    function reportAbuse() {
+      var req = getXHR();
+      if (req) {
+        
+          var docid = 'dfx7gckk_5g5f39cfn';
+          var posttoken = '';
+        
+        req.onreadystatechange = function() {
+          try {
+            if (req.readyState == 4 && req.status == 200) {
+              var button = document.getElementById("report-abuse-button");
+              button.value = 'Thank you!';
+              button.disabled = true;
+            }
+          } catch (ex) {
+            
+          }
+        }
+        try {
+          req.open('POST', 'MiscCommands', true);
+          req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+          req.send('command=report_abuse&abuseDoc=' + encodeURIComponent(docid) +
+                   '&POST_TOKEN=' + encodeURIComponent(posttoken));
+        } catch (ex) {
+          
+        }
+      }
+    }
+  --></script>
+</body>
+</html>
