@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.  Line
+# up the first '|' above the ':' following the base package name, and the '|' on
+# the right side marks the last column you can put a character in.  You must make
+# exactly 11 lines for the formatting to be correct.  It's also customary to
+# leave one space after the ':'.
+ 
+      |-----handy-ruler------------------------------------------------------|
+dssi: Denemo (API for Audio Processing Plugins)
+dssi:
+dssi: DSSI is an API for audio processing plugins, particularly useful for
+dssi: software synthesis plugins with user interfaces. DSSI is an open and
+dssi: well-documented specification developed for use in Linux audio
+dssi: applications, although portable to other platforms. It may be thought
+dssi: of as LADSPA-for-instruments, or something comparable to VSTi.
+dssi: 
+dssi:http://dssi.sourceforge.net
+dssi: 
+dssi:

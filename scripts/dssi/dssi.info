@@ -1,0 +1,7 @@
+PRGNAM="dssi"
+VERSION="1.0.0"
+HOMEPAGE="http://dssi.sourceforge.net"
+DOWNLOAD="http://voxel.dl.sourceforge.net/sourceforge/dssi/dssi-1.0.0.tar.gz"
+MD5SUM="bc4c50f9f9b3cd13019718266f8f15af"
+MAINTAINER="firebird619"
+EMAIL="firebird209@gmail.com"
