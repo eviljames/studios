@@ -20,7 +20,7 @@ PRGNAM=lv2core
 VERSION=3.0
 ARCH=${ARCH:-i686}
 BUILD=${BUILD:-1}
-TAG=${TAG:-_SB}
+TAG=${TAG:-StS}
 
 
 # Set up build environment

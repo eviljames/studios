@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Slackware build script
-#Copyright (c) 2009, firebird619 <firebird209@gmail.com>
+#Copyright (c) 2009, firebird619 <firebird609@gmail.com>
 #
 #Permission to use, copy, modify, and/or distribute this software for any
 #purpose with or without fee is hereby granted, provided that the above
@@ -16,8 +16,8 @@
 #OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
-PRGNAM=calf
-VERSION=0.0.18.3
+PRGNAM=libtar
+VERSION=1.2.11
 ARCH=${ARCH:-i686}
 BUILD=${BUILD:-1}
 TAG=${TAG:-StS}
@@ -88,7 +88,8 @@ if [ ! -d $PKG/usr/doc/$PRGNAM-$VERSION ] ; then
   mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 fi
 
-cp -a AUTHORS COPYING ChangeLog INSTALL NEWS README VERSION \
+# CHANGE THIS ON A PER-PACKAGE BASIS!  AND DELETE THIS LINE, IDIOT!
+cp -a ChangeLog COPYRIGHT INSTALL README TODO \
   $PKG/usr/doc/$PRGNAM-$VERSION
 
 mkdir -p $PKG/install

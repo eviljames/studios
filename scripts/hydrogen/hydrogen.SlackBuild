@@ -20,7 +20,7 @@ PRGNAM=hydrogen
 VERSION=0.9.4-beta3
 ARCH=${ARCH:-i686}
 BUILD=${BUILD:-1}
-TAG=${TAG:-_SB}
+TAG=${TAG:-StS}
 
 
 # Set up build environment
