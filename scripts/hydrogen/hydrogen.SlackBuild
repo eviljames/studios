@@ -53,11 +53,14 @@ find . \
 # Configure...
 CFLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS" \
-export QTDIR=/usr/lib/qt4/
+QTDIR=/usr/lib/qt4 \
 scons || exit 1
 
 # Install...
-scons install || exit 1
+QTDIR=/usr/lib/qt4 \
+scons PREFIX=/usr \
+DESTDIR=$PKG \
+install || exit 1
 
 # Prepare package
 
