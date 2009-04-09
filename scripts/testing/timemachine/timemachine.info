@@ -1,0 +1,7 @@
+PRGNAM="timemachine"
+VERSION="0.3.2"
+HOMEPAGE="http://plugin.org.uk/timemachine/"
+DOWNLOAD="http://plugin.org.uk/timemachine/timemachine-0.3.2.tar.gz"
+MD5SUM="b49cd52d5a866cc6cfb742c985994ed8"
+MAINTAINER="eviljames"
+EMAIL="storgeek@gmail.com"
