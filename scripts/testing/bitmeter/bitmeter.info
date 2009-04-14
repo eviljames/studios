@@ -1,0 +1,7 @@
+PRGNAM="bitmeter"
+VERSION="1.2"
+HOMEPAGE=" http://users.ecs.soton.ac.uk/njl98r/code/audio/bitmeter/ "
+DOWNLOAD="http://users.ecs.soton.ac.uk/njl98r/code/audio/source/bitmeter-1.2.tar.gz"
+MD5SUM="c27e07770cb74658960a5c55719e341e"
+MAINTAINER="firebird619"
+EMAIL="firebird209 [at] gmail [dot] com"

@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.  Line
+# up the first '|' above the ':' following the base package name, and the '|' on
+# the right side marks the last column you can put a character in.  You must make
+# exactly 11 lines for the formatting to be correct.  It's also customary to
+# leave one space after the ':'.
+ 
+      |-----handy-ruler------------------------------------------------------|
+bitmeter: BitMeter (JACK Diagnostics Tool)
+bitmeter:
+bitmeter: JACK BitMeter is a diagnostics tool for JACK audio software on 
+bitmeter: Linux (and perhaps other systems which have JACK and GTK+ 2.x). As
+bitmeter: its name might suggest, the bitmeter operates at the bare metal of 
+bitmeter: JACK's I/O layer, looking at the 32 binary digits in each invidiual
+bitmeter: sample.
+bitmeter: 
+bitmeter: http://users.ecs.soton.ac.uk/njl98r/code/audio/bitmeter/
+bitmeter: 
+bitmeter:
