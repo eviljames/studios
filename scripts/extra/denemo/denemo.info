@@ -1,0 +1,7 @@
+PRGNAM="denemo"
+VERSION="0.8.2"
+HOMEPAGE="http://www.denemo.org"
+DOWNLOAD="http://download.savannah.gnu.org/releases/denemo/denemo-0.8.2.tar.gz"
+MD5SUM="141c7366f53b07d92ebf78fd5783770a"
+MAINTAINER="firebird619"
+EMAIL="firebird209 [at] gmail [dot] com"
