@@ -1,0 +1,7 @@
+PRGNAM="scrollkeeper"
+VERSION="0.3.14"
+HOMEPAGE="http://scrollkeeper.sourceforge.net/"
+DOWNLOAD="http://softlayer.dl.sourceforge.net/sourceforge/scrollkeeper/scrollkeeper-0.3.14.tar.gz"
+MD5SUM="161eb3f29e30e7b24f84eb93ac696155"
+MAINTAINER="firebird619"
+EMAIL="firebird209 [at] gmail [dot] com"
