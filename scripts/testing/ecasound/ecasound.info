@@ -1,0 +1,7 @@
+PRGNAM="ecasound"
+VERSION="2.6.0"
+HOMEPAGE="http://ecasound.sourceforge.net/"
+DOWNLOAD="http://ecasound.seul.org/download/ecasound-2.6.0.tar.gz"
+MD5SUM="41f9445b9a9c0cde141831cb53d1ef8f"
+MAINTAINER="firebird619"
+EMAIL="firebird209 [at] gmail [dot] com"
