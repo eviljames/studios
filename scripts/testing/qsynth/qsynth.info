@@ -1,0 +1,7 @@
+PRGNAM="qsynth"
+VERSION="0.3.3"
+HOMEPAGE="http://qsynth.sourceforge.net"
+DOWNLOAD="http://superb-east.dl.sourceforge.net/sourceforge/qsynth/qsynth-0.3.3.tar.gz"
+MD5SUM="648c49d8935814be03f4001f42b169cf"
+MAINTAINER="firebird619"
+EMAIL="firebird209 [at] gmail [dot] com"
