@@ -1,0 +1,7 @@
+PRGNAM="mixxx"
+VERSION="1.6.1+Herc"
+HOMEPAGE="http://www.mixxx.org"
+DOWNLOAD="http://mixxx.org/download/mixxx-1.6.1+Herc/mixxx_1.6.1+Herc.orig.tar.gz"
+MD5SUM="bafae66d22fac15d752073f81c495953"
+MAINTAINER="firebird619"
+EMAIL="firebird209 [at] gmail [dot] com"
