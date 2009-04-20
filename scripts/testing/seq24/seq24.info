@@ -1,0 +1,7 @@
+PRGNAM="seq24
+VERSION="0.9.0"
+HOMEPAGE="https://launchpad.net/seq24"
+DOWNLOAD="http://launchpad.net/seq24/trunk/0.9.0/+download/seq24-0.9.0.tar.gz"
+MD5SUM="8489fa3ce3d8c4f13d5befea07927788"
+MAINTAINER="j14159"
+EMAIL="j.14159@gmail.com"
