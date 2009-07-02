@@ -53,13 +53,13 @@ find . \
 # Configure...
 CFLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS" \
-./waf configure --prefix=/usr \
-  --mandir=/usr/man \ || exit 1
+./waf --prefix=/usr \
+  --mandir=/usr/man configure || exit 1
 
 # Build...
 ./waf || exit 1
 # Install...
-.waf --destdir=/tmp/waf install || exit 1
+./waf --destdir=$PKG install || exit 1
 
 # Prepare package
 
