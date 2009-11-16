@@ -1,7 +1,7 @@
 #!/bin/sh
 
-# Slackware build script
-#Copyright (c) 2009, firebird619 <firebird209 [at] gmail [dot] com>
+# Slackware Build script for calf by eviljames
+#Copyright (c) 2009, eviljames <storgeek [AT] gmail [DOT] com>
 #
 #Permission to use, copy, modify, and/or distribute this software for any
 #purpose with or without fee is hereby granted, provided that the above
@@ -17,7 +17,7 @@
 
 
 PRGNAM=calf
-VERSION=0.0.18.3
+VERSION=0.0.18.5
 ARCH=${ARCH:-i686}
 BUILD=${BUILD:-1}
 TAG=${TAG:-StS}
@@ -25,14 +25,16 @@ TAG=${TAG:-StS}
 
 # Set up build environment
 CWD=$(pwd)
-TMP=${TMP:-/tmp/SB}
+TMP=${TMP:-/tmp/StS}
 PKG=$TMP/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
 
-if [ "$ARCH" = "i686" ] ; then
-  SLKCFLAGS="-O2 -march=i686"
-elif [ "$ARCH" = "i486" ] ; then
-  SLKCFLAGS="-O2 -march=i486"
+if [ "$ARCH" = "x86_64" ] ; then
+  SLKCFLAGS="-O2 -fPIC"
+  LIBDIRSUFFIX="64"
+elif [ "$ARCH" = "i686" ] ; then
+  LIBDIRSUFFIX=""
+  SLKCFLAGS="-O2 -march=i686 -mtune=i686"
 fi
 
 rm -rf $PKG
@@ -50,17 +52,21 @@ find . \
  \( -perm 777 -o -perm 775 -o -perm 511 -o -perm 711 -o -perm 555 \) -exec chmod 755 {} \;
 
 
-# Configure...
+# Configure... 
 CFLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS" \
 ./configure --prefix=/usr \
   --localstatedir=/var \
   --mandir=/usr/man \
+  --libdir=/usr/lib${LIBDIRSUFFIX} \
   --sysconfdir=/etc \
-  --build=$ARCH-$DISTRO-linux --host=$ARCH-$DISTRO-linux || exit 1
+  --with-ladspa-dir=/usr/lib${LIBDIRSUFFIX}/ladspa \
+  --with-dssi-dir=/usr/lib${LIBDIRSUFFIX}/dssi \
+  --with-lv2-dir=/usr/lib${LIBDIRSUFFIX}/lv2 \
+  --build=$ARCH-linux --host=$ARCH-linux || exit 1
 
 # Build...
-make || exit 1
+make -j12 || exit 1
 # Install...
 make DESTDIR=$PKG install || exit 1
 
@@ -88,7 +94,7 @@ if [ ! -d $PKG/usr/doc/$PRGNAM-$VERSION ] ; then
   mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 fi
 
-cp -a AUTHORS COPYING ChangeLog INSTALL NEWS README VERSION \
+cp -a AUTHORS COPYING COPYING.GPL ChangeLog INSTALL README TODO \
   $PKG/usr/doc/$PRGNAM-$VERSION
 
 mkdir -p $PKG/install
