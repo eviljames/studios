@@ -1,0 +1,125 @@
+#!/bin/sh
+
+# Slackware build script for ZynAddSubFX
+
+# Copyright (c) 2009, Christopher Forrest <nyrednek@gmail.com>
+# All rights reserved.
+#
+# Redistribution and use in source and binary forms, with 
+# or without modification, are permitted provided that the
+# following conditions are met:
+#
+#    * Redistributions of source code must retain the 
+#      above copyright notice, this list of conditions 
+#      and the following disclaimer.
+#    * Redistributions in binary form must reproduce the
+#      above copyright notice, this list of conditions 
+#      and the following disclaimer in the documentation
+#      and/or other materials provided with the 
+#      distribution.
+#    * The name of Christopher Forrest may not be used to 
+#      endorse or promote products derived from this 
+#      software without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDER 
+# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
+# BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF 
+# MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+# ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER
+# BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+# EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+# LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+# HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
+# IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+# NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
+# USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY
+# OF SUCH DAMAGE.
+
+PRGNAM=zynaddsubfx
+SRCNAM=ZynAddSubFX
+VERSION=2.4.0
+ARCH=${ARCH:-x86_64}
+BUILD=${BUILD:-2}
+TAG=${TAG:-_SBo}		# the "_SBo" is required
+
+CWD=$(pwd)
+TMP=${TMP:-/tmp/SBo}
+PKG=$TMP/package-$PRGNAM
+OUTPUT=${OUTPUT:-/tmp}	# Drop the package in /tmp
+
+if [ "$ARCH" = "i486" ]; then
+  SLKCFLAGS="-O2 -march=i486 -mtune=i686"
+  LIBDIRSUFFIX=""
+elif [ "$ARCH" = "i686" ]; then
+  SLKCFLAGS="-O2 -march=i686 -mtune=i686"
+  LIBDIRSUFFIX=""
+elif [ "$ARCH" = "x86_64" ]; then
+  SLKCFLAGS="-O2 -fPIC"
+  LIBDIRSUFFIX="64"
+fi
+
+set -e # Exit on most errors
+# If you prefer to do selective error checking with
+#   command || exit 1
+# then that's also acceptable.
+
+rm -rf $PKG
+mkdir -p $TMP $PKG $OUTPUT
+cd $TMP
+rm -rf $SRCNAM-$VERSION
+tar xvjf $CWD/$SRCNAM-$VERSION.tar.bz2
+cd $SRCNAM-$VERSION
+chown -R root:root .
+find . \
+ \( -perm 777 -o -perm 775 -o -perm 711 -o -perm 555 -o -perm 511 \) \
+ -exec chmod 755 {} \; -o \
+ \( -perm 666 -o -perm 664 -o -perm 600 -o -perm 444 -o -perm 440 -o -perm 400 \) \
+ -exec chmod 644 {} \;
+
+# This program is a real quirky one.  You must configure
+# it by editing a Makefile.inc in src directory.  Since
+# we're going to require jack, and we're in Linux, I've
+# taken the liberty of doing the config and putting it
+# into a patch.
+cd src
+patch -R < $CWD/$PRGNAM.patch
+
+# Compile the application
+make
+
+# Install under $PKG
+# This program doesn't have a make install.  We do it
+# manually here.
+cd $PKG
+mkdir -p usr/bin
+mkdir -p usr/doc/$SRCNAM-$VERSION
+mkdir -p usr/share/$PRGNAM
+mkdir usr/share/applications
+mkdir usr/share/icons
+
+cp $TMP/$SRCNAM-$VERSION/src/zynaddsubfx $PKG/usr/bin
+cd $TMP/$SRCNAM-$VERSION/
+cp -a AUTHORS.txt COPYING ChangeLog FAQ.txt HISTORY.txt README.txt bugs.txt $PKG/usr/doc/$SRCNAM-$VERSION
+cp -r $TMP/$SRCNAM-$VERSION/banks $PKG/usr/share/$PRGNAM
+cp $CWD/$PRGNAM.desktop $PKG/usr/share/applications
+cp $TMP/$SRCNAM-$VERSION/zynaddsubfx_icon.ico $PKG/usr/share/icons
+
+# Strip binaries
+( cd $PKG
+  find . | xargs file | grep "executable" | grep ELF | cut -f 1 -d : | \
+    xargs strip --strip-unneeded 2> /dev/null || true
+  find . | xargs file | grep "shared object" | grep ELF | cut -f 1 -d : | \
+    xargs strip --strip-unneeded 2> /dev/null || true
+)
+
+# Put the SlackBuild into the docs
+cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$SRCNAM-$VERSION/$PRGNAM.SlackBuild
+
+# Copy the slack-desc into ./install
+mkdir -p $PKG/install
+cat $CWD/slack-desc > $PKG/install/slack-desc
+
+# Make the package
+cd $PKG
+/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.${PKGTYPE:-tgz}

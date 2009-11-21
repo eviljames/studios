@@ -1,0 +1,13 @@
+--- Makefile.inc	2009-11-17 11:49:49.000000000 -0500
++++ src/Makefile.inc	2009-07-15 15:48:41.000000000 -0400
+@@ -28,8 +28,8 @@
+ #it will try OSS if JACK fails. At runtime you can set the OSS by default by command-line
+ #parameters (run 'zynaddsubfx --help' for help) 
+ 
+-LINUX_AUDIOOUT=OSS_AND_JACK
+-#LINUX_AUDIOOUT=OSS
++#LINUX_AUDIOOUT=OSS_AND_JACK
++LINUX_AUDIOOUT=OSS
+ #LINUX_AUDIOOUT=NONE
+ #LINUX_AUDIOOUT=JACK
+ #LINUX_AUDIOOUT=JACK_RT     JACK_RT support is broken

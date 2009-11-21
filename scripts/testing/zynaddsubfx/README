@@ -1,0 +1,10 @@
+ZynAddSubFX
+
+ZynAddSubFX is a open source software synthesizer 
+capable of making a countless number of instruments, 
+from some common heard from expensive hardware to 
+interesting sounds that you'll boost to an amazing 
+universe of sounds.
+
+ZynAddSubFX requires mxml, fftw, and jack, all available
+at SlackBuilds.org

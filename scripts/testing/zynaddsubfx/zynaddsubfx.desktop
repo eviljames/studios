@@ -1,0 +1,9 @@
+[Desktop Entry]
+Encoding=UTF-8
+Exec=zynaddsubfx
+Icon=/usr/share/icons/zynaddsubfx_icon.ico
+Name=zynaddsubfx
+GenericName=Advanced Synthesizer
+StartupNotify=true
+Type=Application
+Categories=AudioVideo;
